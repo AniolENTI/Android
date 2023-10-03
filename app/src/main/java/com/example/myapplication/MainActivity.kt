@@ -2,6 +2,9 @@ package com.example.myapplication
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -13,55 +16,38 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.core.widget.doBeforeTextChanged
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
+
+    val startText: TextView by lazy { findViewById(R.id.start_screen_text) }
+    val button: Button by lazy { findViewById(R.id.start_screen_button) }
+    val editText: EditText by lazy { findViewById(R.id.start_screen_editText) }
+    var counter = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            MyApplicationTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Column()
-                    {
-                        PrintToScreen("Mondongo")
-                        PrintToScreen("AAAAAAAAAAAAAAAAAAAAAAAA")
+        setContentView(R.layout.start_screen)
 
-                        for(i in 1..5)
-                        {
-                            PrintToScreen("Perejil")
-                        }
+        val text: TextView = findViewById(R.id.start_screen_text)
+        text.text = "Funciona"
 
-                        Spacer(modifier = Modifier.height(16.dp))
 
-                        PrintToScreen("Hee Hee")
-
-                        var names = listOf("Armando", "Bomba", "Cantimplora", "Robotin")
-
-                        for(name in names)
-                        {
-                            PrintToScreen(name)
-                        }
-
-                    }
-                }
+        button.setOnClickListener{
+            counter ++
+            startText.text = counter.toString()
+        }
+        /*
+        editText.doBeforeTextChanged{ text, start, count, after ->
+            when(text?.length){
+                2 -> editText.setTextColor(())
             }
         }
+        */
     }
-}
-
-@Composable
-fun PrintToScreen(name: String, modifier: Modifier = Modifier) {
-
-    var name = name ?: run {
-        Log.e("NullError", "Name is Null")
-        return
-    }
-    Text(
-        text = "Hello ${name}!",
-        modifier = modifier
-    )
 }
 
 /*
